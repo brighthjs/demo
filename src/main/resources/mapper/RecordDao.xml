@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.RecordDao">
+    <insert id="insertRecord" parameterType="com.example.demo.entity.Record">
+    	INSERT INTO
+    	record(u_id, url, date, frequency)
+    	VALUES(#{uId},#{url},#{date},#{freq})
+    	ON DUPLICATE KEY UPDATE frequency=frequency+1
+    </insert>
+    
+    <select id="top10User" resultType="hashmap">
+    	SELECT u.u_name,sum(r.frequency) AS f_sum  
+    	from user AS u LEFT JOIN record AS r ON u.u_id = r.u_id 
+    	where date = #{date} and r.u_id != 1
+    	GROUP BY r.u_id 
+    	ORDER BY f_sum 
+    	DESC LIMIT 10
+    </select>
+    
+    <select id="top10Url" resultType="hashmap">
+    	SELECT url,sum(frequency) AS f_sum
+    	from record
+    	where date = #{date}
+    	GROUP BY url
+    	ORDER BY f_sum
+    	DESC LIMIT 10
+    </select>
+    
+
+</mapper>

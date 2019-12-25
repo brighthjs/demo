@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.UserDao">
+	<select id="queryUserById" resultType="com.example.demo.entity.User">
+    	select u_id as uId, u_name as uName,u_password as uPassword
+    	from user
+    	where u_id=#{uId} 
+    </select>
+</mapper>
